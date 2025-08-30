@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Museum Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .gallery-item {
+            width: 300px;
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        model-viewer {
+            width: 100%;
+            height: 300px;
+            background-color: #e0e0e0;
+        }
+    </style>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body style = "
+    background: url('https://images.unsplash.com/photo-1711107759674-9161698e570d?q=80&w=3132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
+    no-repeat center center fixed;
+    background-size: cover;
+">
+    <h1>Explore Museum Items</h1>
+    <div class="gallery">
+        <div class="gallery-item">
+            <h2>Bada Imambara</h2>
+            <img src="/static/images/bim.jpg" alt="Dinosaur Sculpture" style="width:100%; height:300px; object-fit:cover;">
+        </div>
+        <div class="gallery-item">
+            <h2>Taj Mahal</h2>
+            <img src="/static/images/tm.jpg" alt="Dinosaur Sculpture" style="width:100%; height:300px; object-fit:cover;">
+        </div>
+        <div class="gallery-item">
+            <h2>Chota Imambara</h2>
+            <img src="/static/images/cim.png" alt="Dinosaur Sculpture" style="width:100%; height:300px; object-fit:cover;">
+        </div>
+        <div class="gallery-item">
+            <h2>Hawa Mahal</h2>
+            <img src="/static/images/hm.png" alt="Dinosaur Sculpture" style="width:100%; height:300px; object-fit:cover;">
+        </div>
+        <div class="gallery-item">
+            <h2>Amer Fort</h2>
+            <img src="/static/images/af.png" alt="Dinosaur Sculpture" style="width:100%; height:300px; object-fit:cover;">
+        </div>
+        <div class="gallery-item">
+            <h2>Jaigarh Fort</h2>
+            <img src="/static/images/jf.png" alt="Dinosaur Sculpture" style="width:100%; height:300px; object-fit:cover;">
+        </div>
+        
+        <!-- Add more items as needed -->
+    </div>
+</body>
+</html>

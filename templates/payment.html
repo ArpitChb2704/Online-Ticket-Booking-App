@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Payment - Ticket Booking System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Complete Payment</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Booking Details</h4>
+                            <p><strong>Name:</strong> {{ ticket['name'] }}</p>
+                            <p><strong>Age:</strong> {{ ticket['age'] }}</p>
+                            <p><strong>Email:</strong> {{ ticket['email'] }}</p>
+                            <p><strong>Museum:</strong> {{ ticket['museum_name'] }}</p>
+                            <p><strong>Visit Date:</strong> {{ ticket['museum_visit_date'] }}</p>
+                            <p><strong>Visit Time:</strong> {{ ticket['museum_visit_time'] }}</p>
+                            <p><strong>Amount:</strong> ₹200.00</p>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <h4>Pay Securely with Card</h4>
+                            <form action="{{ url_for('create_checkout_session', ticket_id=ticket['ticket_id']) }}" method="POST">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    Pay with Stripe
+                                </button>
+                            </form>
+                            <p class="mt-2 text-muted">Use Stripe test card: 4242 4242 4242 4242</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="{{ get_locale() }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ticket Booking System{% endblock %}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body style = "
+    background: url('https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
+    no-repeat center center fixed;
+    background-size: cover;
+">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{{ url_for('home') }}">My App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('chatbot') }}">Chatbot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('view') }}">View</a>
+                    </li>
+                    {% if 'user_id' in session %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('my_tickets') }}">My Tickets</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main class="container mt-4">
+        {% block content %}
+        <!-- Default content -->
+        {% endblock %}
+    </main>
+    <!-- Footer -->
+    <footer  class="bg-light text-center py-3">
+        <p>&copy; 2025 Ticket Booking App. All Rights Reserved.</p>
+    </footer>
+  
+</body>
+</html>

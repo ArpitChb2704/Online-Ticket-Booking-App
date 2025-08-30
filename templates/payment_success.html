@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Confirmation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS (for modern utility classes) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column; /* Use flexbox column to stack elements vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem; /* Add some padding to prevent the button from touching the edge */
+        }
+        .card-container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        .icon {
+            color: #10B981; /* Green color for success */
+        }
+        .details-list li {
+            text-align: left;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .btn-download {
+            background-color: #10B981;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+        .btn-download:hover {
+            background-color: #059669;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('home') }}" class="btn btn-primary mb-5" style="width: 200px;">Go to Homepage</a>
+
+    <div class="card-container">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4 flex items-center justify-center">
+            <span class="icon mr-3 text-5xl">✅</span> Payment Successful!
+        </h2>
+        <p class="text-lg text-gray-600 mb-8">Your booking is confirmed. Here are your details:</p>
+
+        <ul class="list-none p-0 details-list text-gray-700">
+            <li><b>Name:</b> {{ ticket.name }}</li>
+            <li><b>Email:</b> {{ ticket.email }}</li>
+            <li><b>Age:</b> {{ ticket.age }}</li>
+            <li><b>Museum:</b> {{ ticket.museum }}</li>
+            <li><b>Visit Date:</b> {{ ticket.museum_visit_date }}</li>
+            <li><b>Visit Time:</b> {{ ticket.museum_visit_time }}</li>
+            <li><b>Transaction ID:</b> {{ ticket.transaction_id }}</li>
+        </ul>
+
+        <a href="{{ url_for('download_ticket', ticket_id=ticket.ticket_id) }}" class="btn-download mt-8">
+            <span class="inline-block mr-2">📥</span> Download Ticket (PDF)
+        </a>
+    </div>
+
+    <!-- Bootstrap JS (optional, for some components) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

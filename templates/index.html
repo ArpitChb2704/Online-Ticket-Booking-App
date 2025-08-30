@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Booking App</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chat-box { border: 1px solid #ccc; padding: 10px; width: 400px; height: 300px; overflow-y: auto; margin-top: 20px; }
+        .user { color: blue; }
+        .bot { color: green; }
+    </style>
+</head>
+<body>
+    <h1>🎟️ Ticket Booking App</h1>
+
+    <!-- Ticket Booking -->
+    <h2>🎫 Book Your Tickets</h2>
+    <form id="payment-form">
+        <label>Number of Tickets:</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1">
+        <button type="submit">Proceed to Payment</button>
+    </form>
+
+    <!-- Chatbot -->
+    <h2>💬 Chatbot</h2>
+    <div class="chat-box" id="chat-box"></div>
+    <input type="text" id="user-input" placeholder="Ask me anything..." />
+    <button onclick="sendMessage()">Send</button>
+<script>
+function sendMessage() {
+    const userMessage = document.getElementById("userInput").value;
+
+    // Show user message in chatbox
+    let chatBox = document.getElementById("chatBox");
+    chatBox.innerHTML += `<p style="color:blue;"><b>You:</b> ${userMessage}</p>`;
+
+    // Send message to backend
+    fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: userMessage })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Show chatbot reply
+        chatBox.innerHTML += `<p style="color:green;"><b>Bot:</b> ${data.reply}</p>`;
+        chatBox.scrollTop = chatBox.scrollHeight; // Auto scroll
+    });
+
+    document.getElementById("userInput").value = "";
+}
+</script>
+    <script>
+        // Stripe Checkout
+        const stripe = Stripe("pk_test_your_publishable_key"); // Replace with your key
+
+        document.getElementById("payment-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const quantity = document.getElementById("quantity").value;
+
+            const response = await fetch("/create-checkout-session", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ quantity: quantity })
+            });
+
+            const session = await response.json();
+            stripe.redirectToCheckout({ sessionId: session.id });
+        });
+
+        // Chatbot
+        async function sendMessage() {
+            const input = document.getElementById("user-input").value;
+            if (!input) return;
+
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: input })
+            });
+
+            const data = await response.json();
+            chatBox.innerHTML += `<p class="bot">Bot: ${data.reply}</p>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+            document.getElementById("user-input").value = "";
+        }
+    </script>
+</body>
+</html>
