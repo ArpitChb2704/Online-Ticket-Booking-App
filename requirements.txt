@@ -1,0 +1,9 @@
+Flask
+Flask-SQLAlchemy
+Flask-Babel
+Flask-Cors
+stripe
+qrcode
+apscheduler
+reportlab
+PyMySQL
