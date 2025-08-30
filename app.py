@@ -259,46 +259,7 @@ def payment_cancel(ticket_id):
     return f"Payment cancelled for ticket {ticket_id}."
 
 
-# -------------------------------
-# Email Reminder
-# -------------------------------
-def send_email_reminder(ticket):
-    try:
-        sender_email = os.getenv("EMAIL_SENDER", "your_email@gmail.com")
-        password = os.getenv("EMAIL_PASSWORD", "your_app_password")
-        receiver_email = ticket.email
 
-        message = MIMEMultipart("alternative")
-        message["Subject"] = f"Reminder: Your Museum Visit on {ticket.museum_visit_date.strftime('%d-%m-%Y')}"
-        message["From"] = sender_email
-        message["To"] = receiver_email
-
-        html = f"""
-        <html><body>
-            <h2>Museum Visit Reminder</h2>
-            <p>Dear {ticket.name},</p>
-            <p>This is a friendly reminder about your upcoming visit.</p>
-            <p><strong>Date:</strong> {ticket.museum_visit_date.strftime('%d-%m-%Y')}</p>
-            <p><strong>Time:</strong> {ticket.museum_visit_time}</p>
-            <p><strong>Ticket Code:</strong> {ticket.ticket_code}</p>
-        </body></html>
-        """
-        message.attach(MIMEText(html, "html"))
-
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(sender_email, password)
-            server.sendmail(sender_email, receiver_email, message.as_string())
-        return True
-    except Exception as e:
-        print(f"Failed to send email: {str(e)}")
-        return False
-
-@app.route('/send_reminder/<int:ticket_id>')
-def send_reminder(ticket_id):
-    from models import Ticket
-    ticket = Ticket.query.get_or_404(ticket_id)
-    success = send_email_reminder(ticket)
-    return "Reminder sent successfully!" if success else "Failed to send reminder."
 
 # -------------------------------
 # QR Code
