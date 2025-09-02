@@ -259,8 +259,6 @@ def payment_cancel(ticket_id):
     return f"Payment cancelled for ticket {ticket_id}."
 
 
-
-
 # -------------------------------
 # QR Code
 # -------------------------------
@@ -287,8 +285,16 @@ def chatbot():
     if request.method == 'POST':
         data = request.get_json()
         user_message = data.get('message')
-        bot_response = get_chatbot_response(user_message)
+        user_id = request.remote_addr
+        bot_response = get_chatbot_response(user_id, user_message)
+
+        # if bot_response is dict (redirect case), return as-is
+        if isinstance(bot_response, dict):
+            return jsonify(bot_response)
+
+        # otherwise normal text
         return jsonify({"response": bot_response})
+
     return render_template('chatbot.html')
 
 @app.teardown_appcontext
